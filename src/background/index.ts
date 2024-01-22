@@ -66,8 +66,8 @@ async function main() {
     id: "archivePage",
     title: "Archive Current Page",
     contexts: [ "all" ],
-    onclick: async (info) => {
-      await archiver.archiveImmediately(info.pageUrl)
+    onclick: async (_info, tab) => {
+      await archiver.archiveImmediately(tab.url)
     }
   })
 
@@ -75,10 +75,10 @@ async function main() {
     id: "addDomain",
     title: "Add Current Domain to List",
     contexts: [ "all" ],
-    onclick: async (info) => {
+    onclick: async (_info, tab) => {
       const currentList = await config.get(GlobalConfigKey.ArchiveMode, "allowlist")
 
-      const url = new URL(info.pageUrl)
+      const url = new URL(tab.url)
       await domainList.addEntry({
         id: v4(),
         type: "domain",
